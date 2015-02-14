@@ -12,32 +12,50 @@ class CategoriesController < ApplicationController
   end
 
   def new
+    unless current_user.admin?
+      redirect_to new_user_session_path, notice: 'You have to be administrator to do this.'
+    end
   end
 
   def edit
+    unless current_user.admin?
+      redirect_to new_user_session_path, notice: 'You have to be administrator to do this.'
+    end
   end
 
   def create
-    self.category = Category.new(category_params)
-
-    if category.save
-      redirect_to category, notice: 'Category was successfully created.'
+    unless current_user.admin?
+      redirect_to new_user_session_path, notice: 'You have to be administrator to do this.'
     else
-      render action: 'new'
+      self.category = Category.new(category_params)
+
+      if category.save
+        redirect_to category, notice: 'Category was successfully created.'
+      else
+        render action: 'new'
+      end
     end
   end
 
   def update
-    if category.update(category_params)
-      redirect_to category, notice: 'Category was successfully updated.'
+    unless current_user.admin?
+      redirect_to new_user_session_path, notice: 'You have to be administrator to do this.'
     else
-      render action: 'edit'
+      if category.update(category_params)
+        redirect_to category, notice: 'Category was successfully updated.'
+      else
+        render action: 'edit'
+      end
     end
   end
 
   def destroy
-    category.destroy
-    redirect_to categories_url, notice: 'Category was successfully destroyed.'
+    unless current_user.admin?
+      redirect_to new_user_session_path, notice: 'You have to be administrator to do this.'
+    else
+      category.destroy
+      redirect_to categories_url, notice: 'Category was successfully destroyed.'
+    end
   end
 
   private
