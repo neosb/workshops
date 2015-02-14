@@ -36,3 +36,6 @@ group :test do
 end
 
 ruby '2.1.5'
+
+# I need this for Rails console on Linux
+gem 'rb-readline'
