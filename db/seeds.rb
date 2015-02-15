@@ -20,10 +20,10 @@ User.find_by(email: 'girl@hot.com').update(admin: true, password: 'try_me', pass
 20.times do
   string = (0...8).map { o[rand(o.length)] }.join
   longer_string = (0...400).map { o[rand(o.length)] }.join
-  Product.create!(title: string, description: longer_string.gsub('e', ' '), price: rand(100.0).round(2), category_id: rand(1..6), user_id: rand(1..5))
+  Product.create!(title: string, description: longer_string.gsub('e', ' '), price: rand(100.0).round(2), category_id: rand(1..6), user_id: 6)
 end
 
 10.times do
   string = (0...200).map { o[rand(o.length)] }.join
-  Review.create!(content: string.gsub('e', ' '), rating: rand(1..100), product_id: rand(1..20), user_id: rand(1..5))
+  Review.create!(content: string.gsub('e', ' '), rating: rand(1..100), product_id: rand(1..20), user_id: 6)
 end
