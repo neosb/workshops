@@ -39,3 +39,7 @@ ruby '2.1.5'
 
 # I need this for Rails console on Linux
 gem 'rb-readline'
+
+group :production do
+  gem 'rails_12factor'
+end
