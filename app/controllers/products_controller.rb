@@ -1,4 +1,6 @@
 class ProductsController < ApplicationController
+  before_action :authenticate_user!, only: [:new, :edit, :update, :destroy, :create]
+  before_action :author!, only: [:edit, :update]
   expose(:category)
   expose(:products)
   expose(:product)
@@ -45,6 +47,14 @@ class ProductsController < ApplicationController
   private
 
   def product_params
-    params.require(:product).permit(:title, :description, :price, :category_id)
+    params.require(:product).permit(:title, :description, :price, :category_id, :user_id)
+  end
+
+  # Thanks to rayros, I found a way to pass the tests on get http method which initially gave me 
+  def author!
+    unless self.product.user == current_user
+      redirect_to category_product_url(category, product),
+        flash: { error: 'You are not allowed to edit this product.' }
+    end
   end
 end
