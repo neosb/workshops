@@ -6,12 +6,15 @@
 
 %p
   - category.products.each do |product|
-    = product.title
+    = link_to product.title,
+      category_product_url(category.id, product.id)
 
-%p
-  %h3 New product
-  = render 'products/form'
+- if user_signed_in? && current_user.admin?
+  %p
+    %h3 New product
+    = render 'products/form'
 
-= link_to 'Edit', edit_category_path(category)
-\|
+- if user_signed_in? && current_user.admin?
+  = link_to 'Edit', edit_category_path(category)
+  \|
 = link_to 'Back', categories_path, class: 'btn btn-primary'

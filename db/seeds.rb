@@ -28,5 +28,5 @@ end
 
 10.times do
   string = (0...200).map { o[rand(o.length)] }.join
-  Review.create!(content: string.gsub('e', ' '), rating: rand(1..100), product_id: rand(1..20), user_id: rand(1..4))
+  Review.create!(content: string.gsub('e', ' '), rating: rand(1..5), product_id: rand(1..20), user_id: rand(1..4))
 end
